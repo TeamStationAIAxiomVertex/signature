@@ -3,219 +3,736 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TeamStation AI Email Signature Generator</title>
+  <title>TeamStation AI Email Signature Studio</title>
   <style>
     :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --blue: #2563eb;
-      --blue-dark: #1d4ed8;
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-strong: #f9fbff;
+      --text: #101828;
+      --muted: #667085;
+      --subtle: #98a2b3;
+      --line: #d9e2ef;
+      --line-strong: #b8c7dc;
+      --blue: #2357ff;
+      --blue-dark: #173dc2;
+      --green: #047857;
+      --ink: #162033;
+      --shadow: 0 18px 50px rgba(16, 24, 40, 0.08);
+      --radius: 8px;
     }
+
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
+      min-width: 320px;
       background: var(--bg);
       color: var(--text);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
     }
-    .wrap {
-      width: min(1120px, calc(100% - 32px));
+
+    a { color: inherit; }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 40px 0 56px;
+      padding: 24px 0 56px;
     }
-    header {
+
+    .topbar {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 28px;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 0 22px;
     }
-    header img {
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      text-decoration: none;
     }
-    h1 {
-      font-size: clamp(28px, 4vw, 42px);
-      margin: 0;
-      letter-spacing: -0.04em;
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(35, 87, 255, 0.16);
+      flex: 0 0 auto;
     }
-    .lede {
-      color: var(--muted);
-      margin: 6px 0 0;
-      font-size: 15px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(280px, 420px) 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-    }
-    h2 {
-      margin: 0 0 12px;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-    label {
+
+    .brand-name {
       display: block;
-      color: #374151;
-      font-weight: 650;
-      font-size: 12px;
-      margin: 13px 0 6px;
-    }
-    input, textarea {
-      width: 100%;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      padding: 10px 12px;
-      font: inherit;
-      font-size: 14px;
       color: var(--text);
-      background: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.1;
     }
-    textarea { min-height: 74px; resize: vertical; }
-    .actions {
+
+    .brand-subtitle {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      margin-top: 2px;
+    }
+
+    .topbar-actions {
       display: flex;
+      align-items: center;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 18px;
+      justify-content: flex-end;
     }
-    button, .button-link {
-      appearance: none;
-      border: 0;
-      border-radius: 999px;
+
+    .button,
+    button {
+      min-height: 40px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      padding: 9px 13px;
       background: var(--blue);
-      color: #fff;
-      padding: 10px 15px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
     }
-    button:hover, .button-link:hover { background: var(--blue-dark); }
-    button.secondary, .button-link.secondary {
+
+    .button:hover,
+    button:hover {
+      background: var(--blue-dark);
+    }
+
+    .button.secondary,
+    button.secondary {
+      background: #ffffff;
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .button.secondary:hover,
+    button.secondary:hover {
+      background: #eef4ff;
+      border-color: #bdd0ff;
+      color: var(--blue-dark);
+    }
+
+    .button:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid rgba(35, 87, 255, 0.2);
+      outline-offset: 2px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+      gap: 26px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-copy {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(24px, 4vw, 42px);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 720px;
+      color: var(--text);
+      font-size: clamp(34px, 5vw, 58px);
+      font-weight: 850;
+      letter-spacing: 0;
+      line-height: 0.96;
+    }
+
+    .lede {
+      max-width: 660px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .hero-checks {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hero-checks li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .check-icon {
+      width: 18px;
+      height: 18px;
       color: var(--blue);
-      background: #eff6ff;
+      flex: 0 0 auto;
+      margin-top: 1px;
     }
-    button.secondary:hover, .button-link.secondary:hover { background: #dbeafe; }
-    .preview-shell {
-      background: #fff;
-      border: 1px dashed #cbd5e1;
-      border-radius: 14px;
-      padding: 22px;
+
+    .hero-preview {
+      background: linear-gradient(180deg, #f9fbff 0%, #ffffff 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(18px, 3vw, 28px);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .preview-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .preview-card {
+      background: #ffffff;
+      border: 1px solid #d5ddec;
+      border-radius: var(--radius);
+      padding: 18px;
       overflow-x: auto;
     }
-    .note {
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(300px, 430px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 32px rgba(16, 24, 40, 0.06);
+      min-width: 0;
+    }
+
+    .panel-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-header h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .panel-header p {
+      margin: 5px 0 0;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.55;
-      margin-top: 14px;
     }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin: 0 0 6px;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid #cfd9e8;
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: var(--text);
+      padding: 9px 11px;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
     .status {
+      min-height: 20px;
+      margin-top: 12px;
+      color: var(--green);
       font-size: 13px;
-      color: #047857;
-      font-weight: 700;
-      margin-top: 10px;
-      min-height: 18px;
+      font-weight: 800;
     }
-    .small-list {
+
+    .preview-shell {
+      background: #ffffff;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      padding: 20px;
+      overflow-x: auto;
+      min-height: 210px;
+    }
+
+    .quality-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .quality-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: var(--surface-strong);
+    }
+
+    .quality-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .quality-item span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .install {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .steps {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
-      padding-left: 18px;
-      margin: 8px 0 0;
     }
-    code {
-      background: #f3f4f6;
-      border-radius: 6px;
-      padding: 2px 5px;
+
+    .steps li:last-child {
+      border-bottom: 0;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #eef4ff;
+      color: var(--blue);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .steps strong {
+      display: block;
+      color: var(--text);
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .codebox {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px 12px;
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #f3f6fb;
+      color: #344054;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: 12px;
+      line-height: 1.45;
+      white-space: nowrap;
     }
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: 1fr; }
+
+    .footer-note {
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .workspace,
+      .install {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-preview {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page-shell {
+        width: min(100% - 24px, 1180px);
+        padding-top: 14px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .topbar-actions,
+      .form-actions {
+        width: 100%;
+      }
+
+      .button,
+      button {
+        flex: 1 1 auto;
+      }
+
+      .hero-copy,
+      .hero-preview,
+      .panel-body,
+      .panel-header {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .hero-checks,
+      .field-grid,
+      .quality-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <header>
-      <img src="assets/teamstation-logo-160.png" alt="TeamStation AI logo">
-      <div>
-        <h1>TeamStation AI Email Signature</h1>
-        <p class="lede">Generate a branded, copy/paste-safe signature for Gmail, Outlook, and other rich text email clients.</p>
+  <main class="page-shell">
+    <nav class="topbar" aria-label="Signature tools">
+      <a class="brand" href="https://teamstation.dev/">
+        <img src="assets/teamstation-logo-160.png" alt="TeamStation AI logo">
+        <span>
+          <span class="brand-name">TeamStation AI</span>
+          <span class="brand-subtitle">Email Signature Studio</span>
+        </span>
+      </a>
+      <div class="topbar-actions">
+        <a class="button secondary" href="dist/lonnie.html">Open Lonnie signature</a>
+        <a class="button" href="#generator">Build team signature</a>
       </div>
-    </header>
+    </nav>
 
-    <section class="grid">
-      <form class="card" id="signature-form">
-        <h2>Team member details</h2>
-
-        <label for="fullName">Full name</label>
-        <input id="fullName" name="fullName" value="Lonnie McRorey" autocomplete="name">
-
-        <label for="title">Title</label>
-        <input id="title" name="title" value="Co-Founder &amp; CEO" autocomplete="organization-title">
-
-        <label for="email">Email</label>
-        <input id="email" name="email" value="lonnie@teamstation.io" autocomplete="email">
-
-        <label for="mobile">Mobile</label>
-        <input id="mobile" name="mobile" value="+52-664-426-4100" autocomplete="tel">
-
-        <label for="officePhone">Office / team phone</label>
-        <input id="officePhone" name="officePhone" value="(619) 320-5319" autocomplete="tel">
-
-        <label for="calendarUrl">Calendar URL</label>
-        <input id="calendarUrl" name="calendarUrl" value="https://calendar.app.google/4Q14Gpcs6XVAAs6B6">
-
-        <label for="address">Address</label>
-        <input id="address" name="address" value="One Seaport Square, 77 Sleeper St, Boston, MA">
-
-        <label for="disclaimer">Legal / confidentiality footer</label>
-        <textarea id="disclaimer" name="disclaimer">This message may contain confidential information intended only for the recipient. Axiom Cortex™, Nearshore Engineering OS™, and Nebula Search AI™ are trademarks of TeamStation Artificial Intelligence LLC.</textarea>
-
-        <div class="actions">
-          <button type="button" id="copyButton">Copy signature</button>
-          <button type="button" class="secondary" id="copyHtmlButton">Copy HTML</button>
-          <a class="button-link secondary" href="dist/lonnie.html">Open Lonnie’s signature</a>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <h1 id="page-title">One clean signature system for the TeamStation AI team.</h1>
+        <p class="lede">Generate a consistent, copy-safe signature for Gmail, Outlook, Apple Mail, and other rich text email clients. The output uses conservative table markup, inline styles, and a public GitHub Pages logo URL.</p>
+        <ul class="hero-checks" aria-label="Signature quality checks">
+          <li>
+            <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M8.2 14.8 3.9 10.5l1.4-1.4 2.9 2.9 6.5-6.6 1.4 1.4-7.9 8Z"/></svg>
+            Email-client-safe layout
+          </li>
+          <li>
+            <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M8.2 14.8 3.9 10.5l1.4-1.4 2.9 2.9 6.5-6.6 1.4 1.4-7.9 8Z"/></svg>
+            Public logo image URL
+          </li>
+          <li>
+            <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M8.2 14.8 3.9 10.5l1.4-1.4 2.9 2.9 6.5-6.6 1.4 1.4-7.9 8Z"/></svg>
+            Editable team defaults
+          </li>
+          <li>
+            <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M8.2 14.8 3.9 10.5l1.4-1.4 2.9 2.9 6.5-6.6 1.4 1.4-7.9 8Z"/></svg>
+            Rich HTML and source copy
+          </li>
+        </ul>
+      </div>
+      <aside class="hero-preview" aria-label="Signature example">
+        <div class="preview-title">
+          <span>LIVE BRAND PREVIEW</span>
+          <span>GitHub Pages ready</span>
         </div>
-        <div class="status" id="status" aria-live="polite"></div>
+        <div class="preview-card" id="hero-preview"></div>
+      </aside>
+    </section>
+
+    <section class="workspace" id="generator">
+      <form class="panel" id="signature-form">
+        <div class="panel-header">
+          <h2>Team member details</h2>
+          <p>Start from a preset or enter a teammate manually. Blank optional fields are omitted from the final signature.</p>
+        </div>
+        <div class="panel-body">
+          <div class="field-grid">
+            <div class="field full">
+              <label for="preset">Preset</label>
+              <select id="preset" name="preset">
+                <option value="lonnie">Lonnie McRorey</option>
+                <option value="blank">Blank team member</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="fullName">Full name</label>
+              <input id="fullName" name="fullName" value="Lonnie McRorey" autocomplete="name">
+            </div>
+
+            <div class="field">
+              <label for="title">Title</label>
+              <input id="title" name="title" value="Co-Founder &amp; CEO" autocomplete="organization-title">
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" value="lonnie@teamstation.io" autocomplete="email" inputmode="email">
+            </div>
+
+            <div class="field">
+              <label for="mobile">Mobile</label>
+              <input id="mobile" name="mobile" value="+52-664-426-4100" autocomplete="tel" inputmode="tel">
+            </div>
+
+            <div class="field">
+              <label for="officePhone">Office / team phone</label>
+              <input id="officePhone" name="officePhone" value="(619) 320-5319" autocomplete="tel" inputmode="tel">
+            </div>
+
+            <div class="field">
+              <label for="calendarUrl">Calendar URL</label>
+              <input id="calendarUrl" name="calendarUrl" value="https://calendar.app.google/4Q14Gpcs6XVAAs6B6" inputmode="url">
+            </div>
+
+            <div class="field">
+              <label for="primarySiteUrl">Primary website</label>
+              <input id="primarySiteUrl" name="primarySiteUrl" value="https://teamstation.dev/" inputmode="url">
+            </div>
+
+            <div class="field">
+              <label for="pricingUrl">Pricing / calculator URL</label>
+              <input id="pricingUrl" name="pricingUrl" value="https://pricing.teamstation.dev/" inputmode="url">
+            </div>
+
+            <div class="field">
+              <label for="researchUrl">R&amp;D URL</label>
+              <input id="researchUrl" name="researchUrl" value="https://engineering.teamstation.dev/" inputmode="url">
+            </div>
+
+            <div class="field">
+              <label for="tagline">Team line</label>
+              <input id="tagline" name="tagline" value="Distributed Engineering OS">
+            </div>
+
+            <div class="field full">
+              <label for="address">Address</label>
+              <input id="address" name="address" value="One Seaport Square, 77 Sleeper St, Boston, MA">
+            </div>
+
+            <div class="field full">
+              <label for="disclaimer">Legal / confidentiality footer</label>
+              <textarea id="disclaimer" name="disclaimer">This message may contain confidential information intended only for the recipient. Axiom Cortex™, Nearshore Engineering OS™, and Nebula Search AI™ are trademarks of TeamStation Artificial Intelligence LLC.</textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="copyButton">Copy signature</button>
+            <button type="button" class="secondary" id="copyHtmlButton">Copy HTML</button>
+            <button type="button" class="secondary" id="resetButton">Reset preset</button>
+          </div>
+          <div class="status" id="status" aria-live="polite"></div>
+        </div>
       </form>
 
-      <section class="card">
-        <h2>Live preview</h2>
-        <div class="preview-shell" id="signature-preview"></div>
-        <p class="note">
-          Use <strong>Copy signature</strong> for Gmail/Outlook. That copies the rendered table with the public logo URL.
-          Use <strong>Copy HTML</strong> only when pasting into a source/HTML editor.
-        </p>
-        <h2 style="margin-top: 24px;">Install notes</h2>
-        <ol class="small-list">
-          <li>Enable GitHub Pages for this repository from <code>main</code> / <code>root</code>.</li>
-          <li>Open this page from the GitHub Pages URL, not the raw GitHub file view.</li>
-          <li>Paste the rendered signature into Gmail Settings → Signature or Outlook Signatures.</li>
-        </ol>
+      <section class="panel" aria-labelledby="preview-title">
+        <div class="panel-header">
+          <h2 id="preview-title">Generated signature</h2>
+          <p>Copy the rendered signature for email settings. Copy HTML only for source editors or QA review.</p>
+        </div>
+        <div class="panel-body">
+          <div class="preview-shell" id="signature-preview"></div>
+          <div class="quality-grid" aria-label="Implementation quality details">
+            <div class="quality-item">
+              <strong>Conservative HTML</strong>
+              <span>Table layout, inline styles, fixed logo dimensions, and no external CSS dependency.</span>
+            </div>
+            <div class="quality-item">
+              <strong>Brand consistency</strong>
+              <span>Shared TeamStation AI marks, product language, links, and legal footer.</span>
+            </div>
+            <div class="quality-item">
+              <strong>Install-ready copy</strong>
+              <span>Clipboard includes rich HTML and a plain-text fallback for stricter clients.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="install" aria-label="Install guidance">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Install workflow</h2>
+          <p>Use the deployed GitHub Pages URL, not the raw GitHub file view.</p>
+        </div>
+        <div class="panel-body">
+          <ol class="steps">
+            <li>
+              <span><strong>Open the signature studio.</strong> Use the public GitHub Pages page so the logo URL is reachable by email clients.</span>
+            </li>
+            <li>
+              <span><strong>Choose or enter the team member.</strong> Confirm name, title, email, phone, calendar, and optional links.</span>
+            </li>
+            <li>
+              <span><strong>Copy the rendered signature.</strong> Paste into Gmail Settings, Outlook Signatures, or Apple Mail Signatures.</span>
+            </li>
+            <li>
+              <span><strong>Send a test email.</strong> Verify logo rendering, links, phone numbers, and legal footer before using externally.</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Production URLs</h2>
+          <p>These paths are what the copied signature depends on after installation.</p>
+        </div>
+        <div class="panel-body">
+          <label for="pageUrl">Team page</label>
+          <code class="codebox" id="pageUrl">https://teamstationaiaxiomvertex.github.io/signature/</code>
+          <label for="logoUrl" style="margin-top:14px;">Logo URL</label>
+          <code class="codebox" id="logoUrl">https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-github-pages-ready%202/assets/teamstation-logo-160.png</code>
+          <p class="footer-note">If TeamStation later moves signature assets to a branded domain, update the single logo URL constant and the ready-made signature fragments together.</p>
+        </div>
       </section>
     </section>
   </main>
 
   <script>
     const LOGO_URL = 'https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-github-pages-ready%202/assets/teamstation-logo-160.png';
+    const TEAM_NAME = 'TeamStation AI';
+    const DEFAULT_DISCLAIMER = 'This message may contain confidential information intended only for the recipient. Axiom Cortex™, Nearshore Engineering OS™, and Nebula Search AI™ are trademarks of TeamStation Artificial Intelligence LLC.';
+
+    const presets = {
+      lonnie: {
+        fullName: 'Lonnie McRorey',
+        title: 'Co-Founder & CEO',
+        email: 'lonnie@teamstation.io',
+        mobile: '+52-664-426-4100',
+        officePhone: '(619) 320-5319',
+        calendarUrl: 'https://calendar.app.google/4Q14Gpcs6XVAAs6B6',
+        primarySiteUrl: 'https://teamstation.dev/',
+        pricingUrl: 'https://pricing.teamstation.dev/',
+        researchUrl: 'https://engineering.teamstation.dev/',
+        tagline: 'Distributed Engineering OS',
+        address: 'One Seaport Square, 77 Sleeper St, Boston, MA',
+        disclaimer: DEFAULT_DISCLAIMER
+      },
+      blank: {
+        fullName: '',
+        title: '',
+        email: '',
+        mobile: '',
+        officePhone: '(619) 320-5319',
+        calendarUrl: '',
+        primarySiteUrl: 'https://teamstation.dev/',
+        pricingUrl: 'https://pricing.teamstation.dev/',
+        researchUrl: 'https://engineering.teamstation.dev/',
+        tagline: 'Distributed Engineering OS',
+        address: 'One Seaport Square, 77 Sleeper St, Boston, MA',
+        disclaimer: DEFAULT_DISCLAIMER
+      }
+    };
+
     const form = document.getElementById('signature-form');
+    const presetEl = document.getElementById('preset');
     const preview = document.getElementById('signature-preview');
+    const heroPreview = document.getElementById('hero-preview');
     const statusEl = document.getElementById('status');
 
     function escapeHtml(value) {
@@ -234,64 +751,76 @@
       return 'https://' + raw;
     }
 
-    function getData() {
-      const data = Object.fromEntries(new FormData(form).entries());
-      return {
-        fullName: escapeHtml(data.fullName),
-        title: escapeHtml(data.title),
-        email: escapeHtml(data.email),
-        mobile: escapeHtml(data.mobile),
-        officePhone: escapeHtml(data.officePhone),
-        calendarUrl: escapeHtml(cleanUrl(data.calendarUrl)),
-        address: escapeHtml(data.address),
-        disclaimer: escapeHtml(data.disclaimer),
-      };
+    function link(url, label) {
+      if (!url || !label) return '';
+      return `<a href="${url}" style="color:#2357ff;text-decoration:none;">${label}</a>`;
     }
 
     function separator() {
-      return '<span style="color:#9ca3af;"> · </span>';
+      return '<span style="color:#98a2b3;"> · </span>';
+    }
+
+    function getData() {
+      const data = Object.fromEntries(new FormData(form).entries());
+      const email = String(data.email || '').trim();
+      return {
+        fullName: escapeHtml(data.fullName),
+        title: escapeHtml(data.title),
+        email: escapeHtml(email),
+        mailto: email ? escapeHtml(`mailto:${email}`) : '',
+        mobile: escapeHtml(data.mobile),
+        officePhone: escapeHtml(data.officePhone),
+        calendarUrl: escapeHtml(cleanUrl(data.calendarUrl)),
+        primarySiteUrl: escapeHtml(cleanUrl(data.primarySiteUrl)),
+        pricingUrl: escapeHtml(cleanUrl(data.pricingUrl)),
+        researchUrl: escapeHtml(cleanUrl(data.researchUrl)),
+        tagline: escapeHtml(data.tagline),
+        address: escapeHtml(data.address),
+        disclaimer: escapeHtml(data.disclaimer)
+      };
+    }
+
+    function applyPreset(key) {
+      const preset = presets[key] || presets.blank;
+      Object.entries(preset).forEach(([name, value]) => {
+        const field = form.elements[name];
+        if (field) field.value = value;
+      });
+      render();
     }
 
     function buildSignature() {
       const d = getData();
-      const contactBits = [];
-      if (d.mobile) contactBits.push(`M: ${d.mobile}`);
-      if (d.officePhone) contactBits.push(`T: ${d.officePhone}`);
-      if (d.calendarUrl) contactBits.push(`<a href="${d.calendarUrl}" style="color:#2563eb;text-decoration:none;">Schedule Call</a>`);
+      const brandBits = [
+        d.primarySiteUrl ? link(d.primarySiteUrl, 'teamstation.dev') : '',
+        d.tagline,
+        'Axiom Cortex™',
+        'Nebula™'
+      ].filter(Boolean);
+      const contactBits = [
+        d.mobile ? `M: ${d.mobile}` : '',
+        d.officePhone ? `T: ${d.officePhone}` : '',
+        d.calendarUrl ? link(d.calendarUrl, 'Schedule Call') : ''
+      ].filter(Boolean);
+      const resourceBits = [
+        d.pricingUrl ? link(d.pricingUrl, 'Pricing Calculator') : '',
+        d.email && d.mailto ? link(d.mailto, d.email) : ''
+      ].filter(Boolean);
 
-      return `<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-family:Arial,Helvetica,sans-serif;color:#111827;line-height:1.35;max-width:720px;">
+      return `<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-family:Arial,Helvetica,sans-serif;color:#101828;line-height:1.35;max-width:720px;">
   <tr>
-    <td style="vertical-align:top;padding-right:16px;">
-      <img src="${LOGO_URL}" width="72" alt="TeamStation AI" style="display:block;border:0;width:72px;height:72px;border-radius:10px;">
+    <td style="vertical-align:top;padding-right:14px;">
+      <img src="${LOGO_URL}" width="64" height="64" alt="TeamStation AI" style="display:block;border:0;width:64px;height:64px;border-radius:8px;">
     </td>
-    <td style="vertical-align:top;border-left:2px solid #3568ff;padding-left:16px;">
-      <div style="font-size:15px;font-weight:700;color:#111827;letter-spacing:.1px;">${d.fullName}</div>
-      <div style="font-size:12px;color:#374151;">${d.title} | TeamStation AI</div>
-
-      <div style="font-size:12px;color:#374151;margin-top:7px;">
-        <a href="https://teamstation.dev/" style="color:#2563eb;text-decoration:none;">teamstation.dev</a>
-        ${separator()}
-        Distributed Engineering OS
-        ${separator()}
-        Axiom Cortex™
-        ${separator()}
-        Nebula™
-      </div>
-
-      <div style="font-size:12px;color:#374151;margin-top:4px;">
-        <a href="https://pricing.teamstation.dev/" style="color:#2563eb;text-decoration:none;">Pricing Calculator</a>
-        ${d.email ? `${separator()}<a href="mailto:${d.email}" style="color:#2563eb;text-decoration:none;">${d.email}</a>` : ''}
-      </div>
-
-      ${contactBits.length ? `<div style="font-size:12px;color:#374151;margin-top:4px;">${contactBits.join(separator())}</div>` : ''}
-
-      <div style="font-size:12px;color:#374151;margin-top:4px;">
-        R&amp;D: <a href="https://engineering.teamstation.dev/" style="color:#2563eb;text-decoration:none;">Team Topologies Research Site</a>
-      </div>
-
-      ${d.address ? `<div style="font-size:11px;color:#6b7280;margin-top:7px;">${d.address}</div>` : ''}
-
-      ${d.disclaimer ? `<div style="font-size:10px;color:#9ca3af;line-height:1.35;margin-top:12px;max-width:620px;">${d.disclaimer}</div>` : ''}
+    <td style="vertical-align:top;border-left:2px solid #2357ff;padding-left:14px;">
+      ${d.fullName ? `<div style="font-size:15px;font-weight:700;color:#101828;letter-spacing:.1px;">${d.fullName}</div>` : ''}
+      ${d.title ? `<div style="font-size:12px;color:#344054;">${d.title} | ${TEAM_NAME}</div>` : `<div style="font-size:12px;color:#344054;">${TEAM_NAME}</div>`}
+      ${brandBits.length ? `<div style="font-size:12px;color:#344054;margin-top:7px;">${brandBits.join(separator())}</div>` : ''}
+      ${resourceBits.length ? `<div style="font-size:12px;color:#344054;margin-top:4px;">${resourceBits.join(separator())}</div>` : ''}
+      ${contactBits.length ? `<div style="font-size:12px;color:#344054;margin-top:4px;">${contactBits.join(separator())}</div>` : ''}
+      ${d.researchUrl ? `<div style="font-size:12px;color:#344054;margin-top:4px;">R&amp;D: ${link(d.researchUrl, 'Team Topologies Research Site')}</div>` : ''}
+      ${d.address ? `<div style="font-size:11px;color:#667085;margin-top:7px;">${d.address}</div>` : ''}
+      ${d.disclaimer ? `<div style="font-size:10px;color:#98a2b3;line-height:1.35;margin-top:12px;max-width:620px;">${d.disclaimer}</div>` : ''}
     </td>
   </tr>
 </table>`;
@@ -301,18 +830,20 @@
       const d = getData();
       return [
         d.fullName,
-        `${d.title} | TeamStation AI`,
-        'teamstation.dev · Distributed Engineering OS · Axiom Cortex™ · Nebula™',
-        `Pricing Calculator · ${d.email}`,
+        d.title ? `${d.title} | ${TEAM_NAME}` : TEAM_NAME,
+        [d.primarySiteUrl && 'teamstation.dev', d.tagline, 'Axiom Cortex™', 'Nebula™'].filter(Boolean).join(' · '),
+        [d.pricingUrl && 'Pricing Calculator', d.email].filter(Boolean).join(' · '),
         [d.mobile && `M: ${d.mobile}`, d.officePhone && `T: ${d.officePhone}`, d.calendarUrl && 'Schedule Call'].filter(Boolean).join(' · '),
-        'R&D: Team Topologies Research Site',
+        d.researchUrl && 'R&D: Team Topologies Research Site',
         d.address,
-        d.disclaimer,
+        d.disclaimer
       ].filter(Boolean).join('\n');
     }
 
     function render() {
-      preview.innerHTML = buildSignature();
+      const signature = buildSignature();
+      preview.innerHTML = signature;
+      heroPreview.innerHTML = signature;
       statusEl.textContent = '';
     }
 
@@ -329,7 +860,7 @@
         } else {
           throw new Error('ClipboardItem unavailable');
         }
-        statusEl.textContent = 'Signature copied. Paste it into your email signature settings.';
+        statusEl.textContent = 'Signature copied. Paste it into the email client signature editor.';
       } catch (error) {
         const range = document.createRange();
         range.selectNode(preview);
@@ -338,7 +869,7 @@
         selection.addRange(range);
         document.execCommand('copy');
         selection.removeAllRanges();
-        statusEl.textContent = 'Signature selected and copied using fallback mode.';
+        statusEl.textContent = 'Signature copied using browser fallback mode.';
       }
     }
 
@@ -346,15 +877,17 @@
       const html = preview.innerHTML.trim();
       try {
         await navigator.clipboard.writeText(html);
-        statusEl.textContent = 'HTML copied.';
+        statusEl.textContent = 'HTML source copied.';
       } catch (error) {
         statusEl.textContent = 'Could not copy HTML automatically. Select the preview and copy manually.';
       }
     }
 
     form.addEventListener('input', render);
+    presetEl.addEventListener('change', (event) => applyPreset(event.target.value));
     document.getElementById('copyButton').addEventListener('click', copyRichSignature);
     document.getElementById('copyHtmlButton').addEventListener('click', copyHtml);
+    document.getElementById('resetButton').addEventListener('click', () => applyPreset(presetEl.value));
     render();
   </script>
 </body>
