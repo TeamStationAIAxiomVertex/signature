@@ -10,6 +10,7 @@ Static GitHub Pages package for the TeamStation AI email signature studio.
 - `assets/teamstation-logo-160.png` — production logo image for email signatures.
 - `assets/teamstation-logo-96.png` — smaller logo asset.
 - `assets/teamstation-logo-source.png` — original source logo.
+- `/assets/...` at the repository root — clean public image URLs for email clients.
 - `.nojekyll` — tells GitHub Pages to serve files directly.
 
 ## Push this package to GitHub
@@ -56,7 +57,7 @@ https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-githu
 The logo URL used inside the email signatures is:
 
 ```text
-https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-github-pages-ready%202/assets/teamstation-logo-160.png
+https://teamstationaiaxiomvertex.github.io/signature/assets/teamstation-logo-160.png
 ```
 
 ## Team install workflow
@@ -76,7 +77,7 @@ For Outlook, paste the rendered signature into **Settings** → **Accounts** →
 Email clients require the logo to be publicly reachable by absolute URL. This package uses conservative table markup, inline styles, fixed logo dimensions, and GitHub Pages for the public logo URL. If TeamStation later hosts the logo at a branded domain, update all instances of:
 
 ```text
-https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-github-pages-ready%202/assets/teamstation-logo-160.png
+https://teamstationaiaxiomvertex.github.io/signature/assets/teamstation-logo-160.png
 ```
 
 to the branded URL, for example:
