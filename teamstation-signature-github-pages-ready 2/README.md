@@ -50,13 +50,13 @@ https://teamstationaiaxiomvertex.github.io/signature/
 Lonnie's direct signature page should be available at:
 
 ```text
-https://teamstationaiaxiomvertex.github.io/signature/dist/lonnie.html
+https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-github-pages-ready%202/dist/lonnie.html
 ```
 
 The logo URL used inside the email signatures is:
 
 ```text
-https://teamstationaiaxiomvertex.github.io/signature/assets/teamstation-logo-160.png
+https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-github-pages-ready%202/assets/teamstation-logo-160.png
 ```
 
 ## Team install workflow
@@ -76,7 +76,7 @@ For Outlook, paste the rendered signature into **Settings** → **Accounts** →
 Email clients require the logo to be publicly reachable by absolute URL. This package uses GitHub Pages for the public logo URL. If TeamStation later hosts the logo at a branded domain, update all instances of:
 
 ```text
-https://teamstationaiaxiomvertex.github.io/signature/assets/teamstation-logo-160.png
+https://teamstationaiaxiomvertex.github.io/signature/teamstation-signature-github-pages-ready%202/assets/teamstation-logo-160.png
 ```
 
 to the branded URL, for example:
