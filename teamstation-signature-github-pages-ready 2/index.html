@@ -505,7 +505,7 @@
         </span>
       </a>
       <div class="topbar-actions">
-        <a class="button secondary" href="dist/lonnie.html">Open Lonnie signature</a>
+        <a class="button secondary" href="dist/lonnie.html">Lonnie's signature</a>
         <a class="button" href="#generator">Build team signature</a>
       </div>
     </nav>
@@ -631,7 +631,7 @@
       <section class="panel" aria-labelledby="preview-title">
         <div class="panel-header">
           <h2 id="preview-title">Generated signature</h2>
-          <p>Copy the rendered signature for email settings. Copy HTML only for source editors or QA review.</p>
+          <p>Use the blue copy button for Gmail, Outlook, and Apple Mail. The HTML button is only for technical review.</p>
         </div>
         <div class="panel-body">
           <div class="preview-shell" id="signature-preview"></div>
@@ -656,22 +656,22 @@
     <section class="install" aria-label="Install guidance">
       <section class="panel">
         <div class="panel-header">
-          <h2>Install workflow</h2>
-          <p>Use the deployed GitHub Pages URL, not the raw GitHub file view.</p>
+          <h2>How to use it</h2>
+          <p>Most teammates only need these four steps.</p>
         </div>
         <div class="panel-body">
           <ol class="steps">
             <li>
-              <span><strong>Open the signature studio.</strong> Use the public GitHub Pages page so the logo URL is reachable by email clients.</span>
+              <span><strong>Open this page.</strong> Use the TeamStation AI signature page in your browser.</span>
             </li>
             <li>
-              <span><strong>Choose or enter the team member.</strong> Confirm name, title, email, phone, calendar, and optional links.</span>
+              <span><strong>Enter your details.</strong> Fill in your name, title, email, phone, and calendar link. Leave anything optional blank.</span>
             </li>
             <li>
-              <span><strong>Copy the rendered signature.</strong> Paste into Gmail Settings, Outlook Signatures, or Apple Mail Signatures.</span>
+              <span><strong>Click Copy signature.</strong> Do not use Copy HTML unless you are editing source code.</span>
             </li>
             <li>
-              <span><strong>Send a test email.</strong> Verify logo rendering, links, phone numbers, and legal footer before using externally.</span>
+              <span><strong>Paste and test.</strong> Paste into your email signature settings, then send yourself a test email.</span>
             </li>
           </ol>
         </div>
@@ -679,15 +679,25 @@
 
       <section class="panel">
         <div class="panel-header">
-          <h2>Production URLs</h2>
-          <p>These paths are what the copied signature depends on after installation.</p>
+          <h2>Email app notes</h2>
+          <p>Paste the copied signature into the normal signature editor.</p>
         </div>
         <div class="panel-body">
-          <label for="pageUrl">Team page</label>
-          <code class="codebox" id="pageUrl">https://teamstationaiaxiomvertex.github.io/signature/</code>
-          <label for="logoUrl" style="margin-top:14px;">Logo URL</label>
-          <code class="codebox" id="logoUrl">https://teamstationaiaxiomvertex.github.io/signature/assets/teamstation-logo-160.png</code>
-          <p class="footer-note">If TeamStation later moves signature assets to a branded domain, update the single logo URL constant and the ready-made signature fragments together.</p>
+          <ol class="steps">
+            <li>
+              <span><strong>Gmail:</strong> Settings, See all settings, General, Signature.</span>
+            </li>
+            <li>
+              <span><strong>Outlook:</strong> Settings, Accounts, Signatures.</span>
+            </li>
+            <li>
+              <span><strong>Apple Mail:</strong> Mail, Settings, Signatures.</span>
+            </li>
+            <li>
+              <span><strong>If the logo is missing:</strong> refresh this page, copy again, and send another test email.</span>
+            </li>
+          </ol>
+          <p class="footer-note">The logo is hosted publicly so it can load inside email clients.</p>
         </div>
       </section>
     </section>
